@@ -44,5 +44,21 @@ app.post('/webhook', async (req, res) => {
     res.sendStatus(500)
   }
 })
+app.get('/webhook', (req, res) => {
+  const verifyToken = 'bot123' // el mismo que pusiste en Meta
+
+  const mode = req.query['hub.mode']
+  const token = req.query['hub.verify_token']
+  const challenge = req.query['hub.challenge']
+
+  if (mode && token) {
+    if (mode === 'subscribe' && token === verifyToken) {
+      console.log('Webhook verified!')
+      res.status(200).send(challenge)
+    } else {
+      res.sendStatus(403)
+    }
+  }
+})
 
 app.listen(3000, () => console.log('Bot running on port 3000'))
