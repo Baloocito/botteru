@@ -1,17 +1,26 @@
 {
-  "name": "proyecto2",
+  "name": "whatsapp-bot-dev",
   "version": "1.0.0",
-  "description": "",
+  "description": "Backend WhatsApp bot MVP con expansión a pedidos y agendamiento usando Firestore",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Baloocito/botteru.git"
   },
-  "keywords": [],
+  "keywords": [
+    "whatsapp",
+    "bot",
+    "express",
+    "firebase",
+    "axios",
+    "render"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -20,6 +29,12 @@
   "homepage": "https://github.com/Baloocito/botteru#readme",
   "dependencies": {
     "axios": "^1.13.2",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "firebase-admin": "^11.10.0",
+    "dotenv": "^16.0.3",
+    "body-parser": "^1.20.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }
