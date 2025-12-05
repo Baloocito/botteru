@@ -1,26 +1,38 @@
 import axios from 'axios'
+import {
+  getUserData,
+  setUserDataPart,
+  setUserState,
+  saveBooking,
+} from '../store/stateStore.js'
 
-if (state === 'AGENDAR_FECHA') {
-  // store date
-  await setUserDataPart(from, { date: text })
-  await setUserState(from, 'AGENDAR_HORA')
-  return sendMessage(from, `¿A qué hora? (Ej: 16:00)`)
+const API_BASE = `https://graph.facebook.com/v20.0/${process.env.PHONE_ID}/messages`
+
+export async function handleBookingFlow(from, text, state) {
+  const lower = text.toLowerCase().trim()
+
+  if (state === 'AGENDAR_FECHA') {
+    // store date
+    await setUserDataPart(from, { date: text })
+    await setUserState(from, 'AGENDAR_HORA')
+    return sendMessage(from, `¿A qué hora? (Ej: 16:00)`)
+  }
+
+  if (state === 'AGENDAR_HORA') {
+    await setUserDataPart(from, { time: text })
+    const data = await getUserData(from)
+    // Save booking
+    const booking = await saveBooking(from, data)
+    await setUserState(from, 'MENU_PRINCIPAL')
+    return sendMessage(
+      from,
+      `¡Listo! Tu hora quedó agendada 🎉\n\n📅 Fecha: ${data.date}\n⏰ Hora: ${data.time}\nServicio: ${data.service}\n\nTe confirmaremos en breve.`,
+    )
+  }
+
+  // fallback
+  return sendMessage(from, `No entendí. Escribe 'menu' para volver al inicio.`)
 }
-
-if (state === 'AGENDAR_HORA') {
-  await setUserDataPart(from, { time: text })
-  const data = await getUserData(from)
-  // Save booking
-  const booking = await saveBooking(from, data)
-  await setUserState(from, 'MENU_PRINCIPAL')
-  return sendMessage(
-    from,
-    `¡Listo! Tu hora quedó agendada 🎉\n\n📅 Fecha: ${data.date}\n⏰ Hora: ${data.time}\nServicio: ${data.service}\n\nTe confirmaremos en breve.`,
-  )
-}
-
-// fallback
-return sendMessage(from, `No entendí. Escribe 'menu' para volver al inicio.`)
 
 function parseServiceSelection(text) {
   if (text === '1') return 'Corte de pelo'
