@@ -1,12 +1,9 @@
 import express from 'express'
-import {
-  handleIncomingWebhook,
-  verifyWebhook,
-} from '../services/whatsappHandler.js'
+import { handleIncomingWebhook } from '../services/whatsappHandler.js'
 
 const router = express.Router()
 
-// GET used by Meta to verify webhook during setup
+// GET usado por Meta para verificar el webhook durante la configuración
 router.get('/', (req, res) => {
   const mode = req.query['hub.mode']
   const token = req.query['hub.verify_token']
@@ -24,6 +21,7 @@ router.get('/', (req, res) => {
   res.sendStatus(400)
 })
 
+// POST usado por Meta para enviar mensajes entrantes
 router.post('/', async (req, res) => {
   try {
     await handleIncomingWebhook(req.body)
