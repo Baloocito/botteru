@@ -17,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/Baloocito/botteru/issues"
   },
-  "homepage": "https://github.com/Baloocito/botteru#readme"
+  "homepage": "https://github.com/Baloocito/botteru#readme",
+  "dependencies": {
+    "axios": "^1.13.2",
+    "express": "^5.2.1"
+  }
 }
