@@ -62,3 +62,5 @@ app.get('/webhook', (req, res) => {
 })
 
 app.listen(3000, () => console.log('Bot running on port 3000'))
+
+console.log('Incoming:', JSON.stringify(req.body, null, 2))
