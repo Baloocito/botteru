@@ -51,6 +51,12 @@ export async function handleIncomingWebhook(body) {
       return sendMessage(from, mainMenuText())
   }
 }
+export async function handleIncomingWebhook(body) {
+  console.log('Incoming webhook:', JSON.stringify(body, null, 2))
+  const message = body?.entry?.[0]?.changes?.[0]?.value?.messages?.[0]
+  if (!message) return
+  // resto de tu lógica...
+}
 
 // ---------------- MENÚ PRINCIPAL ----------------
 function mainMenuText() {
